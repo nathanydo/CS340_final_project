@@ -1,5 +1,5 @@
 <?php
-require_once "../config/config.php";
+require_once "../../config/config.php";
 
 // Check if reservation_id and restaurant_id are provided
 if (isset($_GET['reservation_id']) && isset($_GET['restaurant_id'])) {
@@ -20,7 +20,7 @@ if (isset($_GET['reservation_id']) && isset($_GET['restaurant_id'])) {
 
     if (mysqli_stmt_execute($stmt)) {
         // If deletion is successful, redirect to the reservations page
-        header("Location: read_reservations.php?restaurant_id=" . $restaurant_id);
+        header("Location: ../read/read_reservations.php?restaurant_id=" . $restaurant_id);
         exit;
     } else {
         echo "Error deleting reservation: " . mysqli_error($link);

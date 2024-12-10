@@ -1,5 +1,5 @@
 <?php
-require_once "../config/config.php";
+require_once "../../config/config.php";
 
 // Check if restaurant_id is provided
 if (isset($_GET['restaurant_id'])) {
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (mysqli_stmt_execute($stmt)) {
         echo "Reservation added successfully!";
-        header("Location: read_reservations.php?restaurant_id=" . $restaurant_id);
+        header("Location: ../read/read_reservations.php?restaurant_id=" . $restaurant_id);
     } else {
         echo "Something went wrong. Please try again.";
     }
@@ -40,11 +40,12 @@ mysqli_close($link);
     <meta charset="UTF-8">
     <title>Add Reservation</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/css/index.css">
 </head>
 <body>
     <div class="container">
         <h2>Add a Reservation</h2>
-        <form action="create_reservation.php?restaurant_id=<?php echo $restaurant_id; ?>" method="POST">
+        <form action="../create/create_reservation.php?restaurant_id=<?php echo $restaurant_id; ?>" method="POST">
             <div class="form-group">
                 <label for="member_name">Member Name:</label>
                 <input type="text" class="form-control" id="member_name" name="member_name" required>
@@ -57,7 +58,8 @@ mysqli_close($link);
                 <label for="reservation_date">Reservation Date:</label>
                 <input type="date" class="form-control" id="reservation_date" name="date" required>
             </div>
-            <button type="submit" class="btn btn-primary">Add Reservation</button>
+            <input type="submit" class="btn btn-primary" value="Submit">
+            <a href="../read/read_reservations.php?restaurant_id=<?php echo $restaurant_id; ?>" class="btn btn-secondary ml-2">Cancel</a>
         </form>
     </div>
 </body>

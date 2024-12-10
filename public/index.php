@@ -1,9 +1,16 @@
 <?php
 // Include config file
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 require_once "../config/config.php";
 
 // Fetch restaurants
-$sql = "SELECT * FROM RESTAURANTS";
+$sql = "SELECT RESTAURANTS.*, OWNER.name AS owner_name 
+        FROM RESTAURANTS
+        LEFT JOIN OWNER ON RESTAURANTS.owner_id = OWNER.owner_id";
 $result = mysqli_query($link, $sql);
 ?>
 
@@ -22,17 +29,20 @@ $result = mysqli_query($link, $sql);
             <div class="row">
                 <div class="col-md-12">
                     <div class="mt-5 mb-3 clearfix">
-                        <h2 class="pull-left">Restaurant Reservation App</h2>
-                        <a href="create_restaurant.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Add New Restaurant</a>
+                        <h2 class="pull-left">The Big Backs</h2>   
                     </div>
+                    <a href="./create/create_restaurant.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Add New Restaurant</a>  
+                    <a href="./read/read_members.php" class="btn btn-info pull-left">View Members</a>
+                    <a href="./read/read_owners.php" class="btn btn-info pull-left">View Owners</a>
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>ID#</th>
                                 <th>Restaurant</th>
                                 <th>Cuisine</th>
-                                <th>Location</th>
+                                <th>State</th>
                                 <th>Phone Number</th>
+                                <th>Owner</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -42,12 +52,13 @@ $result = mysqli_query($link, $sql);
                                     <td><?php echo $row['restaurant_id']; ?></td>
                                     <td><?php echo $row['restaurant_name']; ?></td>
                                     <td><?php echo $row['cuisine']; ?></td>
-                                    <td><?php echo $row['location']; ?></td>
+                                    <td><?php echo $row['State']; ?></td>
                                     <td><?php echo $row['phone_number']; ?></td>
+                                    <td><?php echo $row['owner_name']; ?></td>
                                     <td>
-                                    <a href="read_reservations.php?restaurant_id=<?php echo $row['restaurant_id']; ?>" class="mr-3" title="View Reservations" data-toggle="tooltip"><span class="fa fa-eye"></span></a>
-                                    <a href="update_restaurant.php?restaurant_id=<?php echo $row['restaurant_id']; ?>" class="mr-3" title="Update Restaurant" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>
-                                    <a href="delete_restaurant.php?restuarant_id=<?php echo $row['restaurant_id']; ?>" class="mr-3" title="Delete Restaurant" data-toggle="tooltip"><span class="fa fa-trash"></span></a>
+                                    <a href="./read/read_reservations.php?restaurant_id=<?php echo $row['restaurant_id']; ?>" class="mr-3" title="View Reservations" data-toggle="tooltip"><span class="fa fa-eye"></span></a>
+                                    <a href="./update/update_restaurant.php?restaurant_id=<?php echo $row['restaurant_id']; ?>" class="mr-3" title="Update Restaurant" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>
+                                    <a href="./delete/delete_restaurant.php?restaurant_id=<?php echo $row['restaurant_id']; ?>" class="mr-3" title="Delete Restaurant" data-toggle="tooltip"><span class="fa fa-trash"></span></a>
                                 </tr>
                             <?php } ?>
                         </tbody>
