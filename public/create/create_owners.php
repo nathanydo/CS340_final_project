@@ -1,3 +1,12 @@
+<!-- CS340 Final Database Project
+ 
+Group: Nathan Do, Kristy Chen, Wesley Trieu
+
+
+-->
+
+
+
 <?php
 
 ini_set('display_errors', '1');

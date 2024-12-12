@@ -1,3 +1,11 @@
+<!-- CS340 Final Database Project
+ 
+Group: Nathan Do, Kristy Chen, Wesley Trieu
+
+
+-->
+
+
 <?php
 
 ini_set('display_errors', '1');
@@ -10,7 +18,6 @@ require_once "../../config/config.php";
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
-    $member_id = $_POST['member_id'];
     $name = $_POST['username'];
     $email = $_POST['email'];
     $dob = $_POST['dob'];
@@ -20,12 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (?, ?, ?)";
     if ($stmt = mysqli_prepare($link, $sql)) {
         // Bind parameters
-        mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $dob);
+        mysqli_stmt_bind_param($stmt, "sss", $name, $email, $dob);
         
         // Execute the query
         if (mysqli_stmt_execute($stmt)) {
             echo "<p>Restaurant added successfully!</p>";
-            header("Location: read_members.php"); // Redirect to the list of restaurants
+            header("Location: ../read/read_members.php"); // Redirect to the list of restaurants
             exit;
         } else {
             echo "<p>Error: Could not add restaurant. Please try again.</p>";
@@ -55,7 +62,7 @@ mysqli_close($link);
                 <div class="col-md-12">
                     <h2 class="mt-5">Add a New Member</h2>
                     <p>Please fill this form to add a new member.</p>
-                    <form action="create_members.php" method="POST">
+                    <form action="./create_members.php" method="POST">
                         <div class="form-group">
                             <label for="username">Username:</label>
                             <input type="text" class="form-control" id="username" name="username" required>

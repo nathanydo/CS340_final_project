@@ -1,3 +1,11 @@
+<!-- CS340 Final Database Project
+ 
+Group: Nathan Do, Kristy Chen, Wesley Trieu
+
+
+-->
+
+
 <?php
 // Include config file
 require_once "../../config/config.php";

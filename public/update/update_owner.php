@@ -1,3 +1,11 @@
+<!-- CS340 Final Database Project
+ 
+Group: Nathan Do, Kristy Chen, Wesley Trieu
+
+
+-->
+
+
 <?php
 // Include config file
 require_once "../../config/config.php";
@@ -46,19 +54,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $restaurant_id = $_POST['restaurant_id'];  // New restaurant association
 
     // Update the owner details
-    $sql = "UPDATE OWNER SET name = ?, email = ?, phone_number = ?, restaurant_id = ? WHERE owner_id = ?";
-    if ($stmt = mysqli_prepare($link, $sql)) {
-        mysqli_stmt_bind_param($stmt, "sssii", $name, $email, $phone_number, $restaurant_id, $owner_id);
-        if (mysqli_stmt_execute($stmt)) {
-            header("Location: ../read/read_owners.php"); // Redirect to the owner list page
-            exit;
-        } else {
+    $sql_owner = "UPDATE OWNER SET name = ?, email = ?, phone_number = ?, restaurant_id = ? WHERE owner_id = ?";
+    if ($stmt_owner = mysqli_prepare($link, $sql_owner)) {
+        mysqli_stmt_bind_param($stmt_owner, "sssii", $name, $email, $phone_number, $restaurant_id, $owner_id);
+        if (!mysqli_stmt_execute($stmt_owner)) {
             echo "Error updating owner. Please try again.";
+            exit;
         }
-        mysqli_stmt_close($stmt);
+        mysqli_stmt_close($stmt_owner);
+    } else {
+        echo "Error preparing update statement for OWNER table.";
+        exit;
     }
-    mysqli_close($link);
+
+    // Now update the restaurant's owner_id
+    if ($restaurant_id !== NULL) {
+        $sql_restaurant = "UPDATE RESTAURANTS SET owner_id = ? WHERE restaurant_id = ?";
+        if ($stmt_restaurant = mysqli_prepare($link, $sql_restaurant)) {
+            mysqli_stmt_bind_param($stmt_restaurant, "ii", $owner_id, $restaurant_id);
+            if (!mysqli_stmt_execute($stmt_restaurant)) {
+                echo "Error updating restaurant with new owner. Please try again.";
+                exit;
+            }
+            mysqli_stmt_close($stmt_restaurant);
+        } else {
+            echo "Error preparing update statement for RESTAURANTS table.";
+            exit;
+        }
+    }
+
+    // Redirect to the owner list page
+    header("Location: ../read/read_owners.php");
+    exit;
 }
+
+// Close the database connection
+mysqli_close($link);
 ?>
 
 <!DOCTYPE html>

@@ -1,3 +1,11 @@
+<!-- CS340 Final Database Project
+ 
+Group: Nathan Do, Kristy Chen, Wesley Trieu
+
+
+-->
+
+
 <?php
 // Include config file
 
@@ -15,6 +23,7 @@ $result = mysqli_query($link, $sql);
     <title>Restaurant Reservation App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/a7a3017413.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../assets/css/index.css">
 </head>
 <body>
@@ -47,12 +56,19 @@ $result = mysqli_query($link, $sql);
                                     <td><?php echo $row['email']; ?></td>
                                     <td><?php echo $row['dob']; ?></td>
                                     <td>
-                                    <a href="../update/update_member.php?member_id=<?php echo $row['member_id']; ?>" class="mr-3" title="Update Member" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>
-                                    <a href="../delete/delete_member.php?member_id=<?php echo $row['member_id']; ?>" class="mr-3" title="Delete Member" data-toggle="tooltip"><span class="fa fa-trash"></span></a>
+                                    <a href="../update/update_member.php?member_id=<?php echo $row['member_id']; ?>" class="mr-3" title="Update Member" data-toggle="tooltip"><span class="fa fa-pencil custom-icon"></span></a>
+                                    <a href="../delete/delete_member.php?member_id=<?php echo $row['member_id']; ?>" class="mr-3" title="Delete Member" data-toggle="tooltip" onclick="return confirmDelete()"><span class="fa fa-trash custom-icon"></span></a>
+                                    <a href="../reviews.php?member_id=<?php echo $row['member_id']; ?>" class="mr-3" title="Add a Review" data-toggle="tooltip"><span class="fa-regular fa-share-from-square custom-icon"></span></a>
+                                    <a href="./read_reviews.php?member_id=<?php echo $row['member_id']; ?>" class="mr-3" title="View Reviews" data-toggle="tooltip"><span class="fa fa-comment custom-icon"></span></a>
+                                    <script>
+                                    function confirmDelete() {
+                                        return confirm("Are you sure you want to delete this member?");
+                                    }
+                                </script>
                                 </tr>
                             <?php } ?>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>        

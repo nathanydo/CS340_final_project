@@ -1,3 +1,11 @@
+<!-- CS340 Final Database Project
+ 
+Group: Nathan Do, Kristy Chen, Wesley Trieu
+
+
+-->
+
+
 <?php
 // Include config file
 
@@ -66,8 +74,13 @@ if (!$result) {
                                             echo !empty($row['restaurant_name']) ? htmlspecialchars($row['restaurant_name']) : "No Restaurant Assigned"; 
                                             ?></td>
                                     <td>
-                                    <a href="../update/update_owner.php?owner_id=<?php echo $row['owner_id']; ?>" class="mr-3" title="Update Owner" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>
-                                    <a href="../delete/delete_owner.php?owner_id=<?php echo $row['owner_id']; ?>" class="mr-3" title="Delete Owner" data-toggle="tooltip"><span class="fa fa-trash"></span></a>
+                                    <a href="../update/update_owner.php?owner_id=<?php echo $row['owner_id']; ?>" class="mr-3" title="Update Owner" data-toggle="tooltip"><span class="fa fa-pencil custom-icon"></span></a>
+                                    <a href="../delete/delete_owner.php?owner_id=<?php echo $row['owner_id']; ?>" class="mr-3" title="Delete Owner" data-toggle="tooltip" onclick="return confirmDelete()"><span class="fa fa-trash custom-icon"></span></a>
+                                    <script>
+                                    function confirmDelete() {
+                                        return confirm("Are you sure you want to delete this owner?");
+                                    }
+                                    </script>
                                 </tr>
                             <?php } ?>
                         </tbody>
